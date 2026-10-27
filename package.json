@@ -1,0 +1,19 @@
+{
+  "name": "autocar",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "start": "npm start --workspace backend",
+    "dev": "npm run dev --workspace backend",
+    "setup": "npm run setup --workspace backend",
+    "db:setup": "npm run db:setup --workspace backend",
+    "test": "npm test --workspace backend",
+    "db:local": "npm run db:local --workspace backend"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
