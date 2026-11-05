@@ -1,0 +1,66 @@
+.crud-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 22px; }
+.crud-toolbar input,.crud-toolbar select { height: 34px; padding: 8px 12px; border: 1px solid #e0e4eb; border-radius: 6px; background: #fff; color: #414853; font: inherit; font-size: 12px; }
+.search-control { position: relative; }
+.search-control .icon { position: absolute; left: 12px; top: 10px; width: 14px; height: 14px; color: #95bdce; }
+.search-control input { width: 200px; padding-left: 34px; background: transparent; }
+.crud-toolbar input::placeholder { color: #9a9fa8; }
+.new-record { margin-left: auto; min-height: 36px; font-size: 12px; }
+.management-table-container { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: #fff; }
+.management-table { width: 100%; border-collapse: collapse; white-space: nowrap; text-align: left; font-size: 12px; color: #777d88; }
+.management-table th { padding: 13px 18px; background: #f8f9fb; border-bottom: 1px solid #f0f1f4; color: #7a8190; font-size: 10px; font-weight: 500; letter-spacing: .4px; }
+.management-table td { padding: 15px 18px; border-bottom: 1px solid #f4f5f7; }
+.management-table tr:last-child td { border-bottom: 0; }
+.management-table strong,.model-cell,.price-cell { color: #172132; font-weight: 600; }
+.management-table .vehicle-photo { width: 70px; padding-top: 10px; padding-bottom: 10px; }
+.vehicle-photo img { display: block; width: 50px; height: 36px; object-fit: cover; border-radius: 7px; }
+.row-actions { white-space: nowrap; }
+.row-actions a,.row-actions button { margin-right: 12px; padding: 3px 0; border: 0; background: none; font: inherit; font-size: 10px; text-decoration: none; }
+.row-actions a:last-child,.row-actions button:last-child { margin-right: 0; }
+.action-view { color: #2667cb; }.action-edit { color: #3c4857; }.action-delete { color: #e43249; }.action-delete:disabled { opacity: .35; cursor: not-allowed; }
+.row-actions a:hover,.row-actions button:hover:enabled { text-decoration: underline; }
+.user-cell { display: flex; align-items: center; gap: 12px; }
+.table-avatar { display: grid; place-items: center; flex-shrink: 0; width: 27px; height: 27px; border-radius: 50%; background: #ffe5e8; color: #e83c51; font-size: 12px; font-weight: 600; }
+.date-cell { color: #a0a7b3; font-size: 10px; }
+.status-badge.purple { background: #f0dfff; color: #9a42c1; }.status-badge.red { background: #ffe5e9; color: #dc3850; }.status-badge.gray { background: #eef0f3; color: #7c8290; }
+.management-table .empty-state { padding: 50px 20px; text-align: center; color: #8993a3; }
+.records-summary { margin: 14px 0 0; color: #8993a3; font-size: 10px; }
+.pagination { display: flex; justify-content: center; gap: 6px; margin-top: 20px; }
+.page-button { display: grid; place-items: center; min-width: 32px; height: 34px; padding: 6px; border: 1px solid #e0e4eb; border-radius: 6px; background: #fff; color: #7d8798; font-size: 12px; }
+.page-button.current { border-color: var(--red); background: var(--red); color: #fff; }
+.page-button:disabled { color: #bbc1ca; cursor: default; opacity: 1; background: #fafbfc; }
+.message-success { color: #087954; border: 1px solid #bcebd6; background: #edfcf4; }
+#page-notice,#page-error { margin: 0 0 18px; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.record-form { padding: 28px; border: 1px solid var(--border); border-radius: 11px; background: #fff; }
+.user-form { max-width: 600px; }.vehicle-form { max-width: 800px; }
+.record-form fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 16px; }
+.span-two { grid-column: 1 / -1; }
+.form-field { min-width: 0; }
+.form-field label { display: block; margin-bottom: 7px; color: #354052; font-size: 12px; }
+.required { color: #ed0010; margin-left: 2px; }
+.form-field input,.form-field select,.form-field textarea { display: block; width: 100%; min-height: 38px; border: 1px solid #dbe0e8; border-radius: 6px; background: #fff; color: #283143; font: inherit; font-size: 12px; padding: 9px 12px; }
+.form-field input::placeholder,.form-field textarea::placeholder { color: #949ca9; }
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus { outline: 2px solid #ed001015; border-color: #ee7a82; }
+.form-field input:disabled,.form-field select:disabled,.form-field textarea:disabled { background: #f8f9fb; opacity: 1; color: #596478; }
+.form-field textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+.field-note { margin: 8px 0 0; color: #9ba2ae; font-size: 10px; line-height: 1.5; }
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 28px; padding-top: 22px; border-top: 1px solid #f1f2f5; }
+.form-actions .button { min-height: 37px; font-size: 12px; }
+.photo-section h2,.form-section-title { margin: 0 0 20px; color: #3a4453; font-size: 12px; font-weight: 500; letter-spacing: .5px; }
+.main-photo-row { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+#main-photo { width: 114px; height: 84px; object-fit: cover; border-radius: 9px; }
+#upload-controls .button { min-height: 34px; font-size: 12px; font-weight: 400; }
+#remove-main { margin-top: 8px; font-size: 10px; }
+.gallery-area { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px; }
+.gallery-list { display: contents; }
+.gallery-item { position: relative; width: 140px; height: 80px; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; }
+.remove-photo { position: absolute; top: 4px; right: 4px; display: grid; place-items: center; width: 22px; height: 22px; padding: 0; border: 1px solid #fff9; border-radius: 50%; color: #fff; background: #0f1728c9; font-size: 17px; }
+.gallery-add { display: grid; place-items: center; min-width: 200px; flex: 1; height: 164px; border: 1px dashed #cbd0d9; border-radius: 10px; color: #969ca7; background: #fff; font-size: 12px; }
+.gallery-add:disabled { cursor: not-allowed; }
+.gallery-note { margin-bottom: 30px; }
+.form-section-title { margin-top: 0; margin-bottom: 22px; }
+@media (max-width:1250px) { .crud-toolbar { gap: 9px; margin-bottom: 17px; }.crud-toolbar input,.crud-toolbar select { height: 29px; padding: 6px 10px; font-size: 10px; }.search-control input { width: 164px; padding-left: 30px; }.search-control .icon { top: 8px; left: 11px; width: 12px; height: 12px; }.new-record { min-height: 30px; padding: 8px 12px; font-size: 10px; }.management-table { font-size: 10px; }.management-table th { padding: 10px 15px; font-size: 8px; }.management-table td { padding: 13px 15px; }.management-table .vehicle-photo { width: 70px; padding-top: 9px; padding-bottom: 9px; }.vehicle-photo img { width: 40px; height: 29px; }.row-actions a,.row-actions button { margin-right: 9px; font-size: 9px; }.user-cell { gap: 10px; }.table-avatar { width: 23px; height: 23px; font-size: 11px; }.date-cell { font-size: 9px; }.page-button { min-width: 27px; height: 28px; font-size: 10px; }.user-form { max-width: 490px; }.vehicle-form { max-width: 650px; }.record-form { padding: 23px; }.form-grid { gap: 17px 14px; }.form-field label { font-size: 11px; margin-bottom: 6px; }.form-field input,.form-field select,.form-field textarea { min-height: 31px; padding: 7px 11px; font-size: 10px; }.form-field textarea { min-height: 70px; }.form-actions { margin-top: 23px; padding-top: 18px; }.form-actions .button { min-height: 31px; padding: 8px 18px; font-size: 10px; }.photo-section h2,.form-section-title { font-size: 10px; margin-bottom: 17px; }.main-photo-row { gap: 13px; margin-bottom: 26px; }#main-photo { width: 93px; height: 69px; }#upload-controls .button { min-height: 28px; font-size: 10px; padding: 6px 13px; }.field-note { font-size: 9px; }.gallery-item { width: 115px; height: 65px; }.gallery-add { min-width: 190px; height: 134px; font-size: 10px; }.gallery-note { margin-bottom: 26px; } }
+@media (max-width:850px) { .new-record { margin-left: 0; }.crud-toolbar { gap: 8px; }.management-table { min-width: 850px; }.users-table { min-width: 720px; } }
+@media (max-width:640px) { .crud-toolbar { align-items: stretch; }.search-control { width: 100%; }.search-control input { width: 100%; }.crud-toolbar select { flex: 1; max-width: 100%; }.new-record { width: 100%; }.record-form { padding: 18px; }.form-grid { grid-template-columns: minmax(0,1fr); gap: 17px; }.span-two { grid-column: auto; }.photo-section h2,.form-section-title { font-size: 11px; }.main-photo-row { flex-wrap: wrap; }.gallery-item { width: calc(50% - 5px); height: 85px; }.gallery-add { min-width: 100%; height: 95px; }.form-actions .button { flex: 1; padding-left: 10px; padding-right: 10px; }.form-field input,.form-field select,.form-field textarea { min-height: 38px; font-size: 12px; } }

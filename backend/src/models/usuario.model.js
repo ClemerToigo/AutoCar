@@ -6,6 +6,11 @@ const Usuario = database.define('Usuario', {
   nome: { type: DataTypes.STRING(255), allowNull: false },
   login: { type: DataTypes.STRING(255), allowNull: false, unique: true },
   senha: { type: DataTypes.STRING(255), allowNull: false },
+  cpf: { type: DataTypes.STRING(11), allowNull: true, unique: true },
+  telefone: { type: DataTypes.STRING(11), allowNull: true },
+  ativo: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
+  versao: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+  versao_sessao: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
   tipo: { type: DataTypes.STRING(20), allowNull: false, defaultValue: 'USUARIO' },
 }, {
   tableName: 'usuarios',

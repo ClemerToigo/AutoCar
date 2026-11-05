@@ -26,7 +26,7 @@ async function setupDatabase() {
       },
       transaction,
     });
-    console.log(created ? 'Tabela de usuários pronta. Administrador criado.' : 'Tabela de usuários pronta. Usuário existente preservado, incluindo a senha.');
+    console.log(created ? 'Banco do AutoCar pronto. Administrador criado.' : 'Banco do AutoCar pronto. Usuário existente preservado, incluindo a senha.');
   });
 }
 

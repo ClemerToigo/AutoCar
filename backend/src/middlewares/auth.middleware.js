@@ -18,8 +18,8 @@ async function verifyJWT(req, res, next) {
     return res.status(401).json({ message: 'Sessão inválida. Entre novamente.' });
   }
   try {
-    const usuario = await Usuario.findByPk(decoded.id_usuario, { attributes: ['id', 'nome', 'login', 'tipo'] });
-    if (!usuario) return res.status(401).json({ message: 'Sessão inválida. Entre novamente.' });
+    const usuario = await Usuario.findByPk(decoded.id_usuario, { attributes: ['id', 'nome', 'login', 'tipo', 'ativo', 'versao_sessao'] });
+    if (!usuario || !usuario.ativo || (decoded.versao_sessao ?? 0) !== usuario.versao_sessao) return res.status(401).json({ message: 'Sessão inválida. Entre novamente.' });
     req.user = publicUser(usuario);
     next();
   } catch (error) {

@@ -9,7 +9,7 @@
     "dev": "node --watch src/server.js",
     "setup": "node scripts/setup-env.js",
     "db:setup": "node scripts/setup-database.js",
-    "test": "node --test ../tests/auth.test.js",
+    "test": "node --test ../tests/*.test.js",
     "db:local": "node scripts/local-postgres.js"
   },
   "dependencies": {
@@ -19,8 +19,10 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.0.0",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.5.0",
     "pg": "^8.20.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.8"
+    "sequelize": "^6.37.8",
+    "sharp": "^0.34.5"
   }
 }

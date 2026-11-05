@@ -22,22 +22,23 @@ export function saveToken(token, remember) {
   (remember ? localStorage : sessionStorage).setItem(TOKEN_KEY, token);
 }
 
-export async function request(path, { method = 'GET', body, authenticated = true } = {}) {
+export async function request(path, { method = 'GET', body, authenticated = true, base = '/api/auth' } = {}) {
   const token = authenticated ? getToken() : null;
   let response;
   try {
-    response = await fetch(`/api/auth${path}`, {
+    response = await fetch(`${base}${path}`, {
       method,
       headers: {
-        ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
+        ...(body !== undefined && !(body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
-      ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+      ...(body !== undefined ? { body: body instanceof FormData ? body : JSON.stringify(body) } : {}),
       cache: 'no-store',
     });
   } catch {
     throw new ApiError('Não foi possível conectar ao AutoCar. Verifique sua conexão e tente novamente.', 0);
   }
+  if (response.status === 204) return null;
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
     if (authenticated && response.status === 401) clearSession();

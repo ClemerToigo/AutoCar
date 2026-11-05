@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const controller = require('../controllers/veiculos.controller');
+const { upload } = require('../services/vehicle-photos');
+router.use(require('../middlewares/auth.middleware'), require('../middlewares/admin.middleware'));
+router.get('/opcoes', controller.options);
+router.get('/', controller.list);
+router.get('/:id', controller.get);
+router.post('/', upload, controller.create);
+router.put('/:id', upload, controller.update);
+router.delete('/:id', controller.remove);
+module.exports = router;

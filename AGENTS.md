@@ -6,3 +6,5 @@
 - Não faça commits nem publique alterações sem um pedido explícito.
 
 - Para o visual do login e dashboard, siga `docs/wireframes/WireFrame_AutoCar.pdf`. Preserve a autenticação real e identifique dados ilustrativos do painel.
+
+- Os CRUDs atribuídos ao Clemer são Usuários e Veículos. Preserve autenticação, validações, fotos e dados reais do banco; Marcas e Categorias servem como opções de referência sem CRUD próprio nesta etapa.

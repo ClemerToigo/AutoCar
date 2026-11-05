@@ -21,13 +21,13 @@ async function login(body = {}) {
   }
   const usuario = await Usuario.findOne({ where: { login: identifier.trim().toLowerCase() } });
   const senhaValida = await bcrypt.compare(senha, usuario?.senha || dummyHash);
-  if (!usuario || !senhaValida) {
+  if (!usuario || !usuario.ativo || !senhaValida) {
     const error = new Error('E-mail ou senha inválidos.');
     error.status = 401;
     throw error;
   }
   const user = publicUser(usuario);
-  const token = jwt.sign(user, config.secret, {
+  const token = jwt.sign({ ...user, versao_sessao: usuario.versao_sessao }, config.secret, {
     algorithm: 'HS256', expiresIn: config.expiresIn, issuer: config.issuer, audience: config.audience,
   });
   return { token_type: 'Bearer', token, ...user };
