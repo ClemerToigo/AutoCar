@@ -17,7 +17,12 @@ npm run setup
 
 O comando `setup` cria `backend/.env` com uma chave JWT aleatória e não substitui uma configuração existente. Ajuste `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` e `DB_NAME` para seu PostgreSQL. Também é possível definir `DATABASE_URL`.
 
-Crie um banco vazio chamado `autocar` no PostgreSQL (por exemplo, `createdb -h localhost -U postgres autocar`). Depois:
+Escolha a opção de PostgreSQL que corresponde ao seu `backend/.env`:
+
+- **Banco local do projeto:** com `DB_HOST=127.0.0.1`, `DB_PORT=5433`, `DB_USER=autocar`, `DB_NAME=autocar` e uma senha própria em `DB_PASSWORD`, execute `npm run db:local`. Esse comando inicia o PostgreSQL isolado em `.local/postgres` e cria o banco `autocar` se necessário. Não é preciso executar `createdb`. Se esse banco já foi configurado, preserve a senha existente no `.env`.
+- **PostgreSQL do sistema ou outro servidor:** configure o `.env` com o host, porta, usuário e senha reais desse servidor e crie o banco vazio se ele ainda não existir. Por exemplo, `createdb -h 127.0.0.1 -p 5432 -U postgres autocar` só se aplica a uma instalação que usa a porta `5432` e o usuário `postgres`. A senha solicitada é a desse usuário no PostgreSQL; não é a senha do Linux nem a do login do AutoCar. Alterar `DB_PASSWORD` no `.env` não altera a senha cadastrada no PostgreSQL.
+
+Com o banco disponível, execute:
 
 ```bash
 npm run db:setup
@@ -37,7 +42,7 @@ Para reiniciar automaticamente o Node.js durante o desenvolvimento: `npm run dev
 
 ### PostgreSQL local opcional
 
-Se o PostgreSQL estiver instalado mas não houver um serviço configurado, execute `npm run db:local` após configurar `backend/.env`. O comando cria um banco de desenvolvimento isolado em `.local/postgres`, exige senha e escuta somente em `127.0.0.1`. Não altera o serviço PostgreSQL do sistema. Usa `pg_config --bindir` para encontrar os executáveis; alternativamente, configure `PG_BIN`.
+Se preferir um banco separado para o projeto, execute `npm run db:local` após configurar `backend/.env`. É necessário ter os executáveis do PostgreSQL instalados. O comando cria um banco de desenvolvimento isolado em `.local/postgres`, exige senha e escuta somente em `127.0.0.1`. Pode coexistir com o serviço PostgreSQL do sistema, usando outra porta, sem alterar esse serviço. Usa `pg_config --bindir` para encontrar os executáveis; alternativamente, configure `PG_BIN`.
 
 Nesta configuração, use uma porta livre (por exemplo, `DB_PORT=5433`), `DB_USER=autocar` e uma senha própria em `DB_PASSWORD`. O banco persiste em `.local/` e pode ser iniciado novamente pelo mesmo comando. Depois, execute `npm run db:setup` e `npm start`. Para pará-lo em Linux: `"$(pg_config --bindir)/pg_ctl" -D .local/postgres stop`.
 
