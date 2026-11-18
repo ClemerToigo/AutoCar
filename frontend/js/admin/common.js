@@ -1,4 +1,6 @@
 import { request, getToken, clearSession, goToLogin } from '../auth.js';
+import { initAdminNavigation } from './navigation.js';
+initAdminNavigation();
 export const api = (path, options = {}) => request(path, { ...options, base: '/api' });
 export const money = (value) => Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 export const date = (value) => new Date(value).toLocaleDateString('pt-BR');
@@ -13,6 +15,11 @@ export function picture(path, alt = '') {
   return image;
 }
 export function badge(label, color) { return el('span', `status-badge ${color}`, label); }
+export function updateIdentity(user) {
+  for (const node of document.querySelectorAll('[data-user-name]')) node.textContent = user.nome;
+  for (const node of document.querySelectorAll('[data-user-role]')) node.textContent = user.tipo === 'ADMIN' ? 'Administrador' : 'Cliente';
+  for (const node of document.querySelectorAll('[data-user-initials]')) node.textContent = user.nome.trim().charAt(0).toUpperCase();
+}
 export function showError(error, target = document.querySelector('#page-error')) {
   if (error.status === 401) { goToLogin(true); return; }
   target.textContent = error.message || 'Não foi possível concluir a solicitação.';
@@ -33,10 +40,7 @@ export function initAdmin(load = async () => {}) {
       if (!getToken()) { goToLogin(); return; }
       const user = await request('/me');
       if (user.tipo !== 'ADMIN') throw Object.assign(new Error('Acesso restrito a administradores.'), { status: 403 });
-      for (const node of document.querySelectorAll('[data-user-name]')) node.textContent = user.nome;
-      for (const node of document.querySelectorAll('[data-user-role]')) node.textContent = 'Administrador';
-      for (const node of document.querySelectorAll('[data-user-initials]')) node.textContent = user.nome.trim().charAt(0).toUpperCase();
-      document.querySelector('#profile-menu').dataset.infoMessage = `${user.nome}\n${user.login}\nAdministrador`;
+      updateIdentity(user);
       await load(user);
       content.hidden = false;
     } catch (error) {

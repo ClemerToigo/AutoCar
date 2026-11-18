@@ -11,6 +11,8 @@ const Usuario = database.define('Usuario', {
   ativo: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
   versao: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
   versao_sessao: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+  termos_aceitos_em: { type: DataTypes.DATE, allowNull: true },
+  versao_termos: { type: DataTypes.STRING(20), allowNull: true },
   tipo: { type: DataTypes.STRING(20), allowNull: false, defaultValue: 'USUARIO' },
 }, {
   tableName: 'usuarios',

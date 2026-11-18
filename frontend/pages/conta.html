@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <script src="/js/theme.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minha conta | AutoCar</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <script type="module" src="/js/conta.js"></script>
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body class="registration-page">
+  <main class="registration-layout" aria-labelledby="account-heading">
+    <header class="registration-header"><a class="brand" href="/" aria-label="AutoCar, início"><span class="brand-icon"><svg class="icon" aria-hidden="true"><use href="/assets/images/icones/sprite.svg#car"/></svg></span><span>AutoCar</span></a><h1 id="account-heading">Minha conta</h1></header>
+    <section class="registration-card account-card">
+      <p id="session-status" class="status-message" role="status" aria-live="polite">Verificando sua sessão…</p>
+      <p id="session-error" class="message message-error" role="alert" hidden></p>
+      <button id="retry-session" class="button button-secondary" type="button" hidden>Tentar novamente</button>
+      <div id="account-content" hidden><h2>Olá, <span id="user-name"></span>!</h2><p>Seu acesso ao AutoCar está ativo.</p><dl><dt>E-mail</dt><dd id="user-email"></dd><dt>Tipo de conta</dt><dd>Cliente</dd></dl></div>
+      <button id="logout" class="button button-primary" type="button">Sair da conta</button>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <script src="/js/theme.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f1728">
+  <title>Criar sua conta | AutoCar</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <script type="module" src="/js/cadastro.js"></script>
+  <script type="module" src="/js/wireframe-ui.js"></script>
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body class="registration-page">
+  <main class="registration-layout" aria-labelledby="registration-heading">
+    <header class="registration-header">
+      <a class="brand" href="/" aria-label="AutoCar, início"><span class="brand-icon"><svg class="icon" aria-hidden="true"><use href="/assets/images/icones/sprite.svg#car"/></svg></span><span>AutoCar</span></a>
+      <h1 id="registration-heading">Criar sua conta</h1>
+      <p class="form-description">Preencha os dados abaixo para se cadastrar</p>
+    </header>
+    <form id="registration-form" class="registration-card" aria-busy="false">
+      <div class="registration-grid">
+        <div class="field full-width"><label for="nome">Nome completo<span class="required" aria-hidden="true">*</span></label><input id="nome" name="nome" type="text" placeholder="Seu nome completo" autocomplete="name" maxlength="255" required></div>
+        <div class="field"><label for="cpf">CPF<span class="required" aria-hidden="true">*</span></label><input id="cpf" name="cpf" type="text" placeholder="000.000.000-00" inputmode="numeric" maxlength="14" required></div>
+        <div class="field"><label for="telefone">Telefone<span class="required" aria-hidden="true">*</span></label><input id="telefone" name="telefone" type="tel" placeholder="(11) 99999-9999" autocomplete="tel" maxlength="15" required></div>
+        <div class="field full-width"><label for="email">E-mail<span class="required" aria-hidden="true">*</span></label><input id="email" name="email" type="email" placeholder="seu@email.com" autocomplete="username" inputmode="email" maxlength="255" required></div>
+        <div class="field"><label for="senha">Senha<span class="required" aria-hidden="true">*</span></label><input id="senha" name="senha" type="password" placeholder="••••••••" autocomplete="new-password" minlength="8" required aria-describedby="password-hint"></div>
+        <div class="field"><label for="confirmar-senha">Confirmar senha<span class="required" aria-hidden="true">*</span></label><input id="confirmar-senha" name="confirmar_senha" type="password" placeholder="••••••••" autocomplete="new-password" minlength="8" required></div>
+      </div>
+      <p id="password-hint" class="registration-hint">Use pelo menos 8 caracteres na senha.</p>
+      <div class="registration-terms"><input id="aceite-termos" name="aceite_termos" type="checkbox" required><label for="aceite-termos">Li e aceito os <span class="sr-only">termos de uso e a política de privacidade</span></label><button class="text-link" type="button" data-info-title="Termos de uso" data-info-message="Use seus próprios dados no cadastro e mantenha sua senha em segurança. Sua conta permite acessar a área de cliente do AutoCar. Os recursos administrativos são exclusivos dos administradores.">Termos de uso</button><span aria-hidden="true">e a</span><button class="text-link" type="button" data-info-title="Política de privacidade" data-info-message="O AutoCar armazena seu nome, CPF, telefone e e-mail para manter o cadastro da sua conta. A senha é armazenada de forma protegida e não é exibida. Os administradores podem consultar e gerenciar os dados cadastrais; outras contas de cliente não têm acesso a esses dados. O aceite desta informação é registrado junto ao cadastro.">Política de privacidade</button></div>
+      <p id="registration-error" class="message message-error" role="alert" hidden tabindex="-1"></p>
+      <p id="registration-status" class="status-message" role="status" aria-live="polite"></p>
+      <div class="registration-actions"><a class="button button-secondary" href="/pages/login.html">Cancelar</a><button id="registration-submit" class="button button-primary" type="submit">Criar conta</button></div>
+      <p class="create-account">Já tem uma conta? <a class="text-link" href="/pages/login.html">Entrar</a></p>
+    </form>
+  </main>
+  <button class="help-button" type="button" aria-label="Ajuda" data-info-title="Cadastro no AutoCar" data-info-message="Informe seu nome, CPF, telefone, e-mail e uma senha com pelo menos 8 caracteres. Confirme a senha e leia os termos antes de criar sua conta. Depois, entre pelo login usando seu e-mail e senha.">?</button>
+  <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><h2 id="info-title"></h2><p id="info-message"></p><form method="dialog"><button class="button button-primary">Entendi</button></form></dialog>
+</body>
+</html>

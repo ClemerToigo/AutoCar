@@ -1,0 +1,39 @@
+:root { --surface: #fff; --page-bg: #f9fafc; --text: #101828; color-scheme: light; }
+:root[data-theme="dark"] { --surface: #1b2638; --page-bg: #101725; --text: #e7edf7; --muted: #a7b5ca; --border: #334158; color: var(--text); background: var(--page-bg); color-scheme: dark; }
+[data-theme="dark"] body,[data-theme="dark"] .admin-page,[data-theme="dark"] .login-panel,[data-theme="dark"] .registration-page { background: var(--page-bg); color: var(--text); }
+[data-theme="dark"] .dashboard-header,[data-theme="dark"] .metric-card,[data-theme="dark"] .dashboard-card,[data-theme="dark"] .management-table-container,[data-theme="dark"] .record-form,[data-theme="dark"] .registration-card,[data-theme="dark"] .info-dialog { background: var(--surface); border-color: var(--border); color: var(--text); }
+[data-theme="dark"] .sidebar { background: #0c1321; }
+[data-theme="dark"] .field input,[data-theme="dark"] .form-field input,[data-theme="dark"] .form-field select,[data-theme="dark"] .form-field textarea,[data-theme="dark"] .crud-toolbar input,[data-theme="dark"] .crud-toolbar select { background: #121d2e; color: var(--text); border-color: #42516a; }
+[data-theme="dark"] .form-field input:disabled,[data-theme="dark"] .form-field select:disabled,[data-theme="dark"] .form-field textarea:disabled { background: #202b3d; color: #a7b5ca; }
+[data-theme="dark"] input::placeholder,[data-theme="dark"] textarea::placeholder { color: #8f9db3; }
+[data-theme="dark"] .metric-value,[data-theme="dark"] .dashboard-header h1,[data-theme="dark"] .card-heading h2,[data-theme="dark"] .profile-button,[data-theme="dark"] .customer-link,[data-theme="dark"] .recent-vehicle-link,[data-theme="dark"] .vehicle-detail p,[data-theme="dark"] .management-table strong,[data-theme="dark"] .model-cell,[data-theme="dark"] .price-cell,[data-theme="dark"] .form-section-title,[data-theme="dark"] .registration-header .brand,[data-theme="dark"] .sale-value,[data-theme="dark"] .customer { color: var(--text); }
+[data-theme="dark"] .metric-card h2,[data-theme="dark"] .field > label,[data-theme="dark"] .form-field label,[data-theme="dark"] .photo-section h2 { color: #c0ccdf; }
+[data-theme="dark"] .metric-note,[data-theme="dark"] .form-description,[data-theme="dark"] .status-message,[data-theme="dark"] .field-note,[data-theme="dark"] .registration-hint,[data-theme="dark"] .create-account,[data-theme="dark"] .registration-terms,[data-theme="dark"] .checkbox-label,[data-theme="dark"] .info-dialog p,[data-theme="dark"] .dashboard-caption,[data-theme="dark"] .dashboard-updated,[data-theme="dark"] .chart-month,[data-theme="dark"] .chart-legend,[data-theme="dark"] .chart-details,[data-theme="dark"] .empty-recent,[data-theme="dark"] .records-summary,[data-theme="dark"] .date-cell,[data-theme="dark"] .customer-date,[data-theme="dark"] .vehicle-detail > span { color: var(--muted); }
+[data-theme="dark"] .customers-table,[data-theme="dark"] .management-table,[data-theme="dark"] .sales-table { color: #c0ccdf; }
+[data-theme="dark"] .customers-table th,[data-theme="dark"] .management-table th,[data-theme="dark"] .sales-table th { background: #121d2e; color: #acbcd4; border-color: var(--border); }
+[data-theme="dark"] .customers-table td,[data-theme="dark"] .management-table td,[data-theme="dark"] .sales-table td,[data-theme="dark"] .form-actions { border-color: var(--border); }
+[data-theme="dark"] .button-secondary,[data-theme="dark"] .page-button { background: #253249; color: var(--text); border-color: #42516a; }
+[data-theme="dark"] .page-button.current { background: var(--red); border-color: var(--red); color: #fff; }
+[data-theme="dark"] .page-button:disabled { color: #74839b; background: #192438; }
+[data-theme="dark"] .text-link,[data-theme="dark"] .action-delete,[data-theme="dark"] .vehicle-count { color: #ff9aa7; }
+[data-theme="dark"] .action-view,[data-theme="dark"] .client-count { color: #91baff; }
+[data-theme="dark"] .action-edit { color: #ccd7e8; }
+[data-theme="dark"] .chart-total { color: #b3c1d6; background: #26344b; }
+[data-theme="dark"] .registration-bars { border-color: var(--border); }
+[data-theme="dark"] .status-badge.green { background: #164438; color: #77e4b7; }
+[data-theme="dark"] .status-badge.yellow { background: #4a3d1c; color: #fde68a; }
+[data-theme="dark"] .status-badge.blue { background: #233d67; color: #a2c7ff; }
+[data-theme="dark"] .status-badge.purple { background: #412c5b; color: #dec1ff; }
+[data-theme="dark"] .status-badge.red { background: #502634; color: #fda4af; }
+[data-theme="dark"] .status-badge.gray { background: #354358; color: #d1dbe9; }
+[data-theme="dark"] .message-error { background: #401f2b; border-color: #7b3b4b; color: #ffb3be; }
+[data-theme="dark"] .message-success,[data-theme="dark"] .account-success { background: #163d32; border-color: #317b60; color: #8fe3be; }
+[data-theme="dark"] .login-notice,[data-theme="dark"] .account-warning { background: #382d17; border-color: #6a5526; color: #f4d28d !important; }
+[data-theme="dark"] .account-danger { border-color: #8b4152; }
+[data-theme="dark"] .account-danger h2 { color: #ff9aa7; }
+[data-theme="dark"] .table-avatar { background: #502634; color: #ffb3be; }
+[data-theme="dark"] .gallery-add { background: #121d2e; border-color: #42516a; color: #adbbd0; }
+[data-theme="dark"] .info-dialog::backdrop { background: #000a; }
+[data-theme="dark"] .account-tabs a[aria-current="page"] { color: #ff9aa7; border-color: #ff596d; }
+.profile-button,.sidebar-profile { text-decoration: none; }
+.sidebar { overflow-y: auto; }

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <script src="/js/theme.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0f1728">
@@ -9,6 +10,7 @@
   <link rel="stylesheet" href="/css/forms.css">
   <script type="module" src="/js/login.js"></script>
   <script type="module" src="/js/wireframe-ui.js"></script>
+  <link rel="stylesheet" href="/css/theme.css">
 </head>
 <body class="login-page">
   <main class="login-layout">
@@ -33,9 +35,9 @@
           <p id="login-status" class="status-message" role="status" aria-live="polite"></p>
           <button id="login-submit" class="button button-primary" type="submit"><span id="submit-label">Entrar</span></button>
         </form>
-        <p class="create-account">Não tem uma conta? <button class="text-link" type="button" data-info-title="Criar uma conta" data-info-message="Para solicitar uma conta, entre em contato com o administrador do AutoCar.">Criar uma conta</button></p>
+        <p class="create-account">Não tem uma conta? <a class="text-link" href="/pages/cadastro.html">Criar uma conta</a></p>
         <a class="back-home" href="/">← Voltar para a página inicial</a>
-        <p class="login-notice">Informe suas credenciais para acessar o painel administrativo</p>
+        <p class="login-notice">Entre com o e-mail e a senha da sua conta.</p>
       </div>
     </section>
   </main>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <script src="/js/theme.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f1728">
+  <title>Configurações | AutoCar</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+<link rel="stylesheet" href="/css/crud.css">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/account.css">
+  <script type="module" src="/js/admin/configuracoes.js"></script>
+  <script type="module" src="/js/wireframe-ui.js"></script>
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body class="admin-page">
+  <aside class="sidebar" aria-label="Painel administrativo">
+    <div class="sidebar-brand"><a class="brand" href="/" aria-label="AutoCar, início"><span class="brand-icon"><svg class="icon" aria-hidden="true"><use href="/assets/images/icones/sprite.svg#car"/></svg></span><span>AutoCar</span></a><span class="admin-caption">Painel Admin</span></div>
+    <nav class="sidebar-navigation" aria-label="Menu principal" aria-busy="true"></nav>
+    <div class="sidebar-settings"><a class="nav-item" href="/pages/admin/configuracoes.html"><span>Configurações</span></a></div>
+    <div class="sidebar-account"><div class="sidebar-profile"><span class="user-avatar" data-user-initials></span><div><strong data-user-name></strong><span data-user-role></span></div></div><button id="logout" class="logout-button" type="button"><span aria-hidden="true">←</span><span>Sair do painel</span></button></div>
+  </aside>
+  <div class="admin-content">
+    <header class="dashboard-header"><h1>Configurações</h1><div class="header-actions"><button class="notification-button" type="button" aria-label="Notificações" data-info-title="Notificações" data-info-message="O módulo de notificações ainda não está disponível."><svg class="icon" aria-hidden="true"><use href="/assets/images/icones/sprite.svg#bell"/></svg></button><a id="profile-menu" class="profile-button" href="/pages/admin/perfil.html" aria-label="Abrir meu perfil"><span class="user-avatar" data-user-initials></span><span data-user-name></span></a></div></header>
+<main class="dashboard-main"><p id="session-status" class="status-message" role="status" aria-live="polite">Verificando sua sessão…</p>
+<div id="session-error" class="message message-error" role="alert" hidden></div>
+<button id="retry-session" class="button button-secondary retry" type="button" hidden>Tentar novamente</button><section id="account-content" hidden><nav class="account-tabs" aria-label="Minha conta"><a href="/pages/admin/perfil.html">Meu perfil</a><a href="/pages/admin/configuracoes.html" aria-current="page">Configurações</a></nav>
+
+<div class="settings-layout">
+  <section class="settings-card" aria-labelledby="appearance-heading"><h2 id="appearance-heading">Aparência</h2><p>Escolha como prefere visualizar o AutoCar. A preferência fica salva neste navegador e vale para todas as telas.</p>
+    <fieldset class="theme-options"><legend class="sr-only">Tema do AutoCar</legend><label class="theme-choice"><input type="radio" name="theme" value="light"><span><strong>Claro</strong><span>Fundos claros e textos escuros.</span></span></label><label class="theme-choice"><input type="radio" name="theme" value="dark"><span><strong>Escuro</strong><span>Fundos escuros e textos claros.</span></span></label></fieldset><p id="theme-status" class="theme-status" role="status" aria-live="polite"></p>
+  </section>
+  <section class="settings-card" aria-labelledby="security-heading"><h2 id="security-heading">Conta e segurança</h2><p>Confira seu perfil e gerencie o acesso à sua conta.</p><div class="settings-account"><span>E-mail: <strong id="settings-email"></strong></span><span>Perfil: <strong id="settings-role"></strong></span></div><div class="settings-actions"><a class="button button-secondary" href="/pages/admin/perfil.html">Editar meu perfil</a><button id="open-sessions" class="button button-secondary" type="button">Encerrar todas as sessões</button></div><p class="field-note">Encerrar as sessões desconecta todos os dispositivos, incluindo este navegador. Será necessário entrar novamente.</p></section>
+  <section class="settings-card account-danger" aria-labelledby="close-heading"><h2 id="close-heading">Encerrar conta</h2><p>O encerramento desativa o acesso à sua conta e encerra todas as sessões. Os cadastros e registros permanecem preservados. Para voltar a acessar, será necessário que outro administrador reative sua conta.</p><p id="close-account-block" class="account-warning" hidden></p><button id="open-close-account" class="button button-primary" type="button" disabled>Encerrar minha conta</button></section>
+</div>
+<dialog id="sessions-dialog" class="info-dialog account-dialog" aria-labelledby="sessions-heading"><h2 id="sessions-heading">Encerrar todas as sessões?</h2><p>Você será desconectado deste navegador e dos outros dispositivos. Confirme sua senha atual para continuar.</p><form id="sessions-form" method="post"><div class="field"><label for="sessions-password">Senha atual</label><input id="sessions-password" name="senha_atual" type="password" autocomplete="current-password" required></div><p id="sessions-error" class="message message-error" role="alert" hidden tabindex="-1"></p><div class="dialog-actions"><button id="sessions-cancel" class="button button-secondary" type="button">Cancelar</button><button id="sessions-submit" class="button button-primary" type="submit">Encerrar sessões</button></div></form></dialog>
+<dialog id="close-dialog" class="info-dialog account-dialog" aria-labelledby="close-dialog-heading"><h2 id="close-dialog-heading">Confirmar encerramento</h2><p>Sua conta ficará desativada e não poderá entrar novamente até ser reativada por outro administrador. Seus cadastros não serão apagados.</p><form id="close-form" method="post"><div class="field"><label for="close-password">Senha atual</label><input id="close-password" name="senha_atual" type="password" autocomplete="current-password" required></div><div class="field"><label for="close-confirmation">Digite ENCERRAR para confirmar</label><input id="close-confirmation" name="confirmacao" type="text" pattern="ENCERRAR" autocomplete="off" required></div><p id="close-error" class="message message-error" role="alert" hidden tabindex="-1"></p><div class="dialog-actions"><button id="close-cancel" class="button button-secondary" type="button">Cancelar</button><button id="close-submit" class="button button-primary" type="submit">Encerrar minha conta</button></div></form></dialog>
+</section></main>
+  </div>
+  <button class="help-button" type="button" aria-label="Ajuda" data-info-title="Minha conta" data-info-message="No perfil, atualize seu nome, e-mail ou senha confirmando a senha atual. Nas configurações, escolha o tema, encerre sessões ou desative sua conta. Alterações de e-mail e senha exigem entrar novamente.">?</button>
+  <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><h2 id="info-title"></h2><p id="info-message"></p><form method="dialog"><button class="button button-primary">Entendi</button></form></dialog>
+</body>
+</html>

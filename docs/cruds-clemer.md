@@ -90,7 +90,7 @@ Erros usam `{ "message": "explicação" }`. A interface mantém os dados preench
 
 ## Escopo e testes
 
-Marcas e categorias são somente referências para o cadastro; seus CRUDs, vendas e serviços não fazem parte da tarefa do Clemer. O estoque, os clientes e os últimos veículos do dashboard vêm do banco; vendas, serviços e gráfico continuam identificados como exemplos do wireframe.
+Marcas e categorias são somente referências para o cadastro; seus CRUDs, vendas e serviços não fazem parte da tarefa do Clemer. Todos os indicadores e listas do dashboard vêm do banco. O gráfico mostra os cadastros de veículos e contas de cliente nos últimos 12 meses. O valor do estoque soma os veículos disponíveis e reservados; vendidos é uma contagem por status. Não há dados de exemplo de vendas ou serviços no painel.
 
 Execute a suíte com um PostgreSQL de testes:
 

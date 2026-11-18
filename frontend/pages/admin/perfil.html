@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <script src="/js/theme.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f1728">
+  <title>Meu perfil | AutoCar</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+<link rel="stylesheet" href="/css/crud.css">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/account.css">
+  <script type="module" src="/js/admin/perfil.js"></script>
+  <script type="module" src="/js/wireframe-ui.js"></script>
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body class="admin-page">
+  <aside class="sidebar" aria-label="Painel administrativo">
+    <div class="sidebar-brand"><a class="brand" href="/" aria-label="AutoCar, início"><span class="brand-icon"><svg class="icon" aria-hidden="true"><use href="/assets/images/icones/sprite.svg#car"/></svg></span><span>AutoCar</span></a><span class="admin-caption">Painel Admin</span></div>
+    <nav class="sidebar-navigation" aria-label="Menu principal" aria-busy="true"></nav>
+    <div class="sidebar-settings"><a class="nav-item" href="/pages/admin/configuracoes.html"><span>Configurações</span></a></div>
+    <div class="sidebar-account"><div class="sidebar-profile"><span class="user-avatar" data-user-initials></span><div><strong data-user-name></strong><span data-user-role></span></div></div><button id="logout" class="logout-button" type="button"><span aria-hidden="true">←</span><span>Sair do painel</span></button></div>
+  </aside>
+  <div class="admin-content">
+    <header class="dashboard-header"><h1>Meu perfil</h1><div class="header-actions"><button class="notification-button" type="button" aria-label="Notificações" data-info-title="Notificações" data-info-message="O módulo de notificações ainda não está disponível."><svg class="icon" aria-hidden="true"><use href="/assets/images/icones/sprite.svg#bell"/></svg></button><a id="profile-menu" class="profile-button" href="/pages/admin/perfil.html" aria-label="Abrir meu perfil"><span class="user-avatar" data-user-initials></span><span data-user-name></span></a></div></header>
+<main class="dashboard-main"><p id="session-status" class="status-message" role="status" aria-live="polite">Verificando sua sessão…</p>
+<div id="session-error" class="message message-error" role="alert" hidden></div>
+<button id="retry-session" class="button button-secondary retry" type="button" hidden>Tentar novamente</button><section id="account-content" hidden><nav class="account-tabs" aria-label="Minha conta"><a href="/pages/admin/perfil.html" aria-current="page">Meu perfil</a><a href="/pages/admin/configuracoes.html">Configurações</a></nav>
+
+<p id="profile-success" class="message account-success account-message" role="status" hidden tabindex="-1"></p>
+<p id="profile-error" class="message message-error account-message" role="alert" hidden tabindex="-1"></p>
+<div class="profile-layout">
+  <section class="profile-card" aria-labelledby="profile-summary-title">
+    <span class="profile-avatar" data-user-initials aria-hidden="true"></span>
+    <h2 id="profile-summary-title" class="profile-name" data-user-name></h2><p id="profile-summary-email" class="profile-summary-email"></p><span class="status-badge purple" data-user-role></span>
+    <dl class="profile-details"><div><dt>CPF</dt><dd id="profile-cpf"></dd></div><div><dt>Telefone</dt><dd id="profile-phone"></dd></div><div><dt>Conta criada em</dt><dd id="profile-created"></dd></div><div><dt>Situação da conta</dt><dd>Ativa</dd></div></dl>
+  </section>
+  <form id="profile-form" class="record-form profile-edit" method="post">
+    <fieldset id="profile-fields">
+      <h2 class="form-section-title">Dados de acesso</h2>
+      <div class="form-grid"><div class="form-field span-two"><label for="nome">Nome completo<span class="required">*</span></label><input id="nome" name="nome" type="text" autocomplete="name" maxlength="255" required></div><div class="form-field span-two"><label for="email">E-mail<span class="required">*</span></label><input id="email" name="email" type="email" autocomplete="username" maxlength="255" required></div></div>
+      <h2 class="form-section-title account-section">Redefinir senha</h2><p class="field-note">Preencha apenas se quiser trocar sua senha. Use pelo menos 8 caracteres.</p>
+      <div class="form-grid"><div class="form-field"><label for="nova-senha">Nova senha</label><input id="nova-senha" name="nova_senha" type="password" minlength="8" autocomplete="new-password"></div><div class="form-field"><label for="confirmar-nova-senha">Confirmar nova senha</label><input id="confirmar-nova-senha" name="confirmar_senha" type="password" minlength="8" autocomplete="new-password"></div></div>
+      <h2 class="form-section-title account-section">Confirmar alteração</h2><div class="form-field"><label for="senha-atual">Senha atual<span class="required">*</span></label><input id="senha-atual" name="senha_atual" type="password" autocomplete="current-password" required></div><p class="field-note">Ao alterar o e-mail ou a senha, todas as sessões são encerradas e será necessário entrar novamente.</p>
+    </fieldset>
+    <div class="form-actions"><a href="/pages/admin/dashboard.html">Voltar ao dashboard</a><button id="save-profile" class="button button-primary" type="submit">Salvar alterações</button></div>
+  </form>
+</div>
+</section></main>
+  </div>
+  <button class="help-button" type="button" aria-label="Ajuda" data-info-title="Minha conta" data-info-message="No perfil, atualize seu nome, e-mail ou senha confirmando a senha atual. Nas configurações, escolha o tema, encerre sessões ou desative sua conta. Alterações de e-mail e senha exigem entrar novamente.">?</button>
+  <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><h2 id="info-title"></h2><p id="info-message"></p><form method="dialog"><button class="button button-primary">Entendi</button></form></dialog>
+</body>
+</html>

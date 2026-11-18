@@ -28,6 +28,27 @@
 .back-home { display: block; width: fit-content; margin: 0 auto; color: #9ca3af; font-size: 12px; text-decoration: none; }
 .back-home:hover { color: #647084; }
 .login-notice { margin: 24px 0 0; padding: 10px 12px; border: 1px solid #f2e7ac; border-radius: 8px; color: #a86d1b; background: #fffcf0; text-align: center; font-size: 10px; line-height: 1.5; }
+.registration-layout { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100svh; padding: 48px 24px; }
+.registration-header { width: 100%; max-width: 440px; margin-bottom: 24px; text-align: center; }
+.registration-header .brand { color: var(--navy); margin-bottom: 16px; }
+.registration-header h1 { margin: 0 0 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; }
+.registration-header .form-description { margin: 0; font-size: 12px; }
+.registration-card { width: 100%; max-width: 440px; padding: 28px; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+.registration-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; }
+.registration-grid .field { min-width: 0; }
+.registration-grid .full-width { grid-column: 1 / -1; }
+.registration-hint { margin: -4px 0 18px; color: #737780; font-size: 10px; line-height: 1.5; }
+.registration-terms { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 0 0 20px; color: #737780; font-size: 10px; line-height: 1.8; }
+.registration-terms > input { margin: 0 3px 0 0; width: 13px; height: 13px; accent-color: var(--red); }
+.registration-terms > label { cursor: pointer; }
+.registration-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.registration-card .create-account { margin: 18px 0 0; font-size: 11px; }
+.account-card h2 { margin: 0 0 12px; font-size: 20px; overflow-wrap: anywhere; }
+.account-card p,.account-card dl { font-size: 13px; line-height: 1.6; }
+.account-card dt { margin-top: 16px; color: #737780; font-size: 11px; }
+.account-card dd { margin: 4px 0 0; overflow-wrap: anywhere; }
+.account-card #logout { width: 100%; margin-top: 24px; }
+@media (max-width: 440px) { .registration-layout { padding: 28px 16px; }.registration-card { padding: 22px 18px; }.registration-header { margin-bottom: 20px; }.registration-grid { grid-template-columns: 1fr; }.registration-terms { font-size: 11px; } }
 @media (min-width: 851px) and (max-width: 1250px) {
   .login-hero { min-height: 679px; }
   .login-hero > .brand { top: 36px; left: 36px; font-size: 16px; gap: 8px; }
