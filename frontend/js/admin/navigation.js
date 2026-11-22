@@ -3,7 +3,8 @@ const modules = [
   ['Dashboard', 'grid', '/pages/admin/dashboard.html'],
   ['Veículos', 'car', '/pages/admin/veiculos.html'],
   ['Usuários', 'users', '/pages/admin/usuarios.html'],
-  ['Marcas', 'tag'], ['Categorias', 'list'], ['Serviços', 'wrench'], ['Vendas', 'dollar'],
+  ['Marcas', 'tag'], ['Categorias', 'list'],
+  ['Serviços', 'wrench', '/pages/admin/servicos.html'], ['Vendas', 'dollar', '/pages/admin/vendas.html'],
   ['Clientes/Leads', 'users', null, 'Etapa atribuída à Isadora. Este módulo ainda não está implementado.'],
   ['Avaliação de Veículos', 'list', null, 'Etapa atribuída à Isadora. Este módulo ainda não está implementado.'],
 ];
@@ -19,7 +20,7 @@ function item(label, symbol, href, message) {
   node.setAttribute('aria-label', label); node.title = label;
   if (href) {
     node.href = href;
-    const active = location.pathname === href || (label === 'Veículos' && location.pathname.endsWith('/veiculo-form.html')) || (label === 'Usuários' && location.pathname.endsWith('/usuario-form.html'));
+    const active = location.pathname === href || (label === 'Veículos' && location.pathname.endsWith('/veiculo-form.html')) || (label === 'Usuários' && location.pathname.endsWith('/usuario-form.html')) || (label === 'Serviços' && location.pathname.endsWith('/servico-form.html')) || (label === 'Vendas' && location.pathname.endsWith('/venda-form.html'));
     if (active) { node.classList.add('active'); node.setAttribute('aria-current', 'page'); }
   } else {
     node.type = 'button'; node.dataset.infoTitle = label;

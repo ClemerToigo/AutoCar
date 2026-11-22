@@ -1,5 +1,5 @@
 import { api, el, showError } from './common.js';
-export function createList({ resource, singular, plural, formPage, columns, render, filters, limit }) {
+export function createList({ resource, singular, plural, formPage, columns, render, filters, limit, feminine = false, labelOf = (row) => row.modelo || row.nome, deleteLabel = 'Excluir', canEdit = () => true, canDelete = () => true, messages = {} }) {
   const table = document.querySelector('#records-body');
   const errorBox = document.querySelector('#page-error');
   const notice = document.querySelector('#page-notice');
@@ -10,16 +10,20 @@ export function createList({ resource, singular, plural, formPage, columns, rend
   let currentUser, page = 1, sequence = 0, deleting = null, timer;
   function actions(row) {
     const cell = el('td', 'row-actions');
-    const view = el('a', 'action-view', 'Ver'); view.href = `${formPage}?id=${row.id}&modo=ver`; view.setAttribute('aria-label', `Ver ${row.modelo || row.nome}`);
-    const edit = el('a', 'action-edit', 'Editar'); edit.href = `${formPage}?id=${row.id}`; edit.setAttribute('aria-label', `Editar ${row.modelo || row.nome}`);
-    const remove = el('button', 'action-delete', 'Excluir'); remove.type = 'button'; remove.setAttribute('aria-label', `Excluir ${row.modelo || row.nome}`);
+    const label = labelOf(row);
+    const view = el('a', 'action-view', 'Ver'); view.href = `${formPage}?id=${row.id}&modo=ver`; view.setAttribute('aria-label', `Ver ${label}`);
+    const edit = el('a', 'action-edit', 'Editar'); edit.href = `${formPage}?id=${row.id}`; edit.setAttribute('aria-label', `Editar ${label}`);
+    const remove = el('button', 'action-delete', deleteLabel); remove.type = 'button'; remove.setAttribute('aria-label', `${deleteLabel} ${label}`);
     if (resource === 'usuarios' && row.id === currentUser.id_usuario) { remove.disabled = true; remove.title = 'Você não pode excluir sua própria conta.'; }
     remove.addEventListener('click', () => {
-      deleting = row; document.querySelector('#delete-name').textContent = row.modelo || row.nome;
+      deleting = row; document.querySelector('#delete-name').textContent = label;
       document.querySelector('#delete-error').hidden = true;
       dialog.showModal();
     });
-    cell.append(view, edit, remove); return cell;
+    cell.append(view);
+    if (canEdit(row)) cell.append(edit);
+    if (canDelete(row)) cell.append(remove);
+    return cell;
   }
   function button(text, target, disabled = false) {
     const node = el('button', target === page && /^\d/.test(text) ? 'page-button current' : 'page-button', text); node.type = 'button'; node.disabled = disabled;
@@ -38,9 +42,9 @@ export function createList({ resource, singular, plural, formPage, columns, rend
       if (requestNumber !== sequence) return;
       if (data.page > data.pages) { page = data.pages; return load(); }
       table.replaceChildren();
-      if (!data.items.length) { const tr = el('tr'); const td = el('td', 'empty-state', `Nenhum ${singular} encontrado.`); td.colSpan = columns; tr.append(td); table.append(tr); }
+      if (!data.items.length) { const tr = el('tr'); const td = el('td', 'empty-state', `${feminine ? 'Nenhuma' : 'Nenhum'} ${singular} ${feminine ? 'encontrada' : 'encontrado'}.`); td.colSpan = columns; tr.append(td); table.append(tr); }
       for (const row of data.items) { const tr = render(row); tr.append(actions(row)); table.append(tr); }
-      summary.textContent = `${data.total} ${data.total === 1 ? singular : plural} ${data.total === 1 ? 'encontrado' : 'encontrados'}`;
+      summary.textContent = `${data.total} ${data.total === 1 ? singular : plural} ${feminine ? (data.total === 1 ? 'encontrada' : 'encontradas') : (data.total === 1 ? 'encontrado' : 'encontrados')}`;
       pagination.replaceChildren(button('←', page - 1, page === 1));
       const first = Math.max(1, Math.min(page - 2, data.pages - 4));
       for (let i = first; i <= Math.min(data.pages, first + 4); i++) pagination.append(button(String(i), i));
@@ -61,7 +65,7 @@ export function createList({ resource, singular, plural, formPage, columns, rend
     confirm.disabled = true; document.querySelector('#cancel-delete').disabled = true;
     try {
       await api(`/${resource}/${deleting.id}`, { method: 'DELETE' }); dialog.close(); deleting = null;
-      notice.textContent = `${singular === 'usuário' ? 'Usuário excluído' : 'Veículo excluído'} com sucesso.`; notice.hidden = false;
+      notice.textContent = messages.excluido ?? `${singular === 'usuário' ? 'Usuário excluído' : 'Veículo excluído'} com sucesso.`; notice.hidden = false;
       await load();
     } catch (error) { showError(error, document.querySelector('#delete-error')); }
     finally { confirm.disabled = false; document.querySelector('#cancel-delete').disabled = false; }
@@ -70,7 +74,7 @@ export function createList({ resource, singular, plural, formPage, columns, rend
   return async (user) => {
     currentUser = user;
     const flash = new URLSearchParams(location.search).get('sucesso');
-    if (flash === 'criado' || flash === 'atualizado') { notice.textContent = `${singular === 'usuário' ? 'Usuário' : 'Veículo'} ${flash} com sucesso.`; notice.hidden = false; }
+    if (flash === 'criado' || flash === 'atualizado') { notice.textContent = messages[flash] ?? `${singular === 'usuário' ? 'Usuário' : 'Veículo'} ${flash} com sucesso.`; notice.hidden = false; }
     await load();
   };
 }

@@ -1,0 +1,17 @@
+.sale-form { max-width: 680px; }
+.form-section-title.sale-section { margin-top: 28px; }
+.service-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+.service-option { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid #dbe0e8; border-radius: 8px; background: #fff; cursor: pointer; }
+.service-option:has(input:checked) { border-color: #ee7a82; background: #fff7f8; }
+.service-option input { flex-shrink: 0; width: 14px; height: 14px; margin: 2px 0 0; accent-color: var(--red); }
+.service-option strong { display: block; color: #283143; font-size: 12px; font-weight: 600; }
+.service-option span { color: #8993a3; font-size: 11px; }
+.service-empty { grid-column: 1 / -1; margin: 0; color: #8993a3; font-size: 12px; }
+fieldset:disabled .service-option { cursor: default; opacity: .85; }
+.vendas-table .model-cell { font-variant-numeric: tabular-nums; }
+.servicos-table .service-description { max-width: 280px; overflow: hidden; text-overflow: ellipsis; }
+[data-theme="dark"] .service-option { background: #121d2e; border-color: #42516a; }
+[data-theme="dark"] .service-option:has(input:checked) { background: #2a1d2b; border-color: #ff596d; }
+[data-theme="dark"] .service-option strong { color: #e7edf7; }
+[data-theme="dark"] .service-option span,[data-theme="dark"] .service-empty { color: #a7b5ca; }
+@media (max-width: 640px) { .service-options { grid-template-columns: 1fr; } }

@@ -62,7 +62,7 @@ Nesta configuração, use uma porta livre (por exemplo, `DB_PORT=5433`), `DB_USE
 
 O dashboard consulta `/api/painel`, com autenticação e perfil ADMIN. Cada consulta usa uma visão consistente do banco. Atualiza ao abrir a página, ao retornar à aba e pelo botão **Atualizar dados**, mostrando a data da última consulta. Falhas de atualização são informadas sem substituir dados reais por números de exemplo. Clientes são contas `USUARIO`, incluindo cadastros públicos; administradores não entram nessa contagem. O valor do estoque exclui veículos vendidos, e o status Vendido não é apresentado como transação financeira. O gráfico considera os registros ainda existentes pela data de criação; excluir um registro também o retira do gráfico. Uma tabela expansível permite consultar os valores exatos de cada mês.
 
-O `.env` e os dados locais em `.local/` são ignorados pelo Git. Os módulos de vendas e serviços não estão implementados. Clientes/Leads e Avaliação de Veículos aparecem apenas como opções informativas no dashboard.
+O `.env` e os dados locais em `.local/` são ignorados pelo Git. Os CRUDs de Serviços e Vendas estão descritos em `docs/cruds-vendas-servicos.md`; depois de atualizar, rode `npm run db:setup` para criar as novas tabelas. Clientes/Leads e Avaliação de Veículos aparecem apenas como opções informativas no dashboard.
 
 ## Perfil e configurações
 

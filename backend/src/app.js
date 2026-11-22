@@ -20,6 +20,8 @@ app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/painel', require('./routes/painel.routes'));
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
 app.use('/api/veiculos', require('./routes/veiculos.routes'));
+app.use('/api/servicos', require('./routes/servicos.routes'));
+app.use('/api/vendas', require('./routes/vendas.routes'));
 app.get('/media/:filename', (req, res, next) => {
   if (!/^[a-f0-9-]{36}\.webp$/.test(req.params.filename)) return res.status(404).end();
   res.sendFile(req.params.filename, { root: require('./services/vehicle-photos').directory, maxAge: '1d', immutable: true }, (error) => { if (error) { if (error.status === 404) res.status(404).end(); else next(error); } });

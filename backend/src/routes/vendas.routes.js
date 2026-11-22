@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const controller = require('../controllers/vendas.controller');
+router.use(require('../middlewares/auth.middleware'), require('../middlewares/admin.middleware'));
+router.get('/opcoes', controller.options);
+router.get('/', controller.list);
+router.get('/:id', controller.get);
+router.post('/', controller.create);
+router.put('/:id', controller.update);
+router.delete('/:id', controller.cancel);
+module.exports = router;
