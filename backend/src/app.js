@@ -20,6 +20,8 @@ app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/painel', require('./routes/painel.routes'));
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
 app.use('/api/veiculos', require('./routes/veiculos.routes'));
+app.use('/api/marcas', require('./routes/marcas.routes'));
+app.use('/api/categorias', require('./routes/categorias.routes'));
 app.use('/api/servicos', require('./routes/servicos.routes'));
 app.use('/api/vendas', require('./routes/vendas.routes'));
 app.get('/media/:filename', (req, res, next) => {
