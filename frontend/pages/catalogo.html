@@ -1,0 +1,256 @@
+
+const veiculos = [
+    {
+        id: 1,
+        marca: "Honda",
+        modelo: "Civic",
+        ano: 2022,
+        preco: 125000,
+        categoria: "Sedan",
+        imagem: "/assets/images/veiculos/civic-wireframe.webp"
+    },
+    {
+        id: 2,
+        marca: "Toyota",
+        modelo: "Corolla",
+        ano: 2023,
+        preco: 145000,
+        categoria: "Sedan",
+        imagem: "/assets/images/veiculos/corolla-wireframe.webp"
+    },
+    {
+        id: 3,
+        marca: "Volkswagen",
+        modelo: "Polo",
+        ano: 2022,
+        preco: 85000,
+        categoria: "Hatch",
+        imagem: "/assets/images/veiculos/polo-wireframe.webp"
+    },
+    {
+        id: 4,
+        marca: "Ford",
+        modelo: "Ranger",
+        ano: 2023,
+        preco: 210000,
+        categoria: "Picape",
+        imagem: "/assets/images/veiculos/ranger-wireframe.webp"
+    }
+];
+
+const formatarPreco = valor =>
+    valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+
+document.body.innerHTML = `
+    <header class="cabecalho">
+        <a href="/pages/catalogo.html" class="logo">AutoCar</a>
+        <nav>
+            <a href="/pages/catalogo.html">Veículos</a>
+            <a href="/pages/servicos.html">Serviços</a>
+            <a href="/pages/login.html">Minha conta</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="banner">
+            <h1>Encontre seu próximo veículo</h1>
+            <p>Qualidade, confiança e as melhores opções para você.</p>
+        </section>
+
+        <section class="catalogo">
+            <h2>Nosso catálogo</h2>
+
+            <div class="filtros">
+                <input
+                    type="search"
+                    id="pesquisa"
+                    placeholder="Pesquisar marca ou modelo..."
+                >
+
+                <select id="categoria">
+                    <option value="">Todas as categorias</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="Hatch">Hatch</option>
+                    <option value="Picape">Picape</option>
+                </select>
+            </div>
+
+            <div id="lista-veiculos" class="lista-veiculos"></div>
+            <p id="mensagem"></p>
+        </section>
+    </main>
+`;
+
+const estilo = document.createElement("style");
+
+estilo.textContent = `
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f6f8;
+        color: #101828;
+    }
+
+    .cabecalho {
+        background: #0f1728;
+        color: white;
+        padding: 22px 7%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    nav {
+        display: flex;
+        gap: 25px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .banner {
+        background: #15243d;
+        color: white;
+        padding: 65px 8%;
+        text-align: center;
+    }
+
+    .banner h1 {
+        font-size: 38px;
+    }
+
+    .catalogo {
+        padding: 45px 8%;
+    }
+
+    .filtros {
+        display: flex;
+        gap: 15px;
+        margin: 25px 0;
+    }
+
+    .filtros input,
+    .filtros select {
+        padding: 13px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        flex: 1;
+    }
+
+    .lista-veiculos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 22px;
+    }
+
+    .card-veiculo {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 12px #0001;
+    }
+
+    .card-veiculo img {
+        width: 100%;
+        height: 190px;
+        object-fit: contain;
+        background: #eee;
+    }
+
+    .card-conteudo {
+        padding: 18px;
+    }
+
+    .card-conteudo h3 {
+        margin-top: 0;
+    }
+
+    .preco {
+        color: #ed0010;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .botao {
+        display: inline-block;
+        background: #ed0010;
+        color: white;
+        padding: 11px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    @media(max-width: 600px) {
+        .cabecalho, .filtros {
+            flex-direction: column;
+        }
+
+        nav {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+`;
+
+document.head.appendChild(estilo);
+
+const lista = document.getElementById("lista-veiculos");
+const pesquisa = document.getElementById("pesquisa");
+const categoria = document.getElementById("categoria");
+const mensagem = document.getElementById("mensagem");
+
+function exibirVeiculos() {
+    const termo = pesquisa.value.toLowerCase();
+    const tipo = categoria.value;
+
+    const filtrados = veiculos.filter(veiculo => {
+        const nome = `${veiculo.marca} ${veiculo.modelo}`.toLowerCase();
+
+        return nome.includes(termo) &&
+            (!tipo || veiculo.categoria === tipo);
+    });
+
+    lista.innerHTML = "";
+
+    mensagem.textContent = filtrados.length
+        ? ""
+        : "Nenhum veículo encontrado.";
+
+    filtrados.forEach(veiculo => {
+        const card = document.createElement("article");
+        card.className = "card-veiculo";
+
+        card.innerHTML = `
+            <img src="${veiculo.imagem}" alt="${veiculo.marca} ${veiculo.modelo}">
+            <div class="card-conteudo">
+                <h3>${veiculo.marca} ${veiculo.modelo}</h3>
+                <p>Ano: ${veiculo.ano}</p>
+                <p>Categoria: ${veiculo.categoria}</p>
+                <p class="preco">${formatarPreco(veiculo.preco)}</p>
+                <a class="botao"
+                   href="/pages/veiculo-detalhes.html?id=${veiculo.id}">
+                   Ver detalhes
+                </a>
+            </div>
+        `;
+
+        lista.appendChild(card);
+    });
+}
+
+pesquisa.addEventListener("input", exibirVeiculos);
+categoria.addEventListener("change", exibirVeiculos);
+
+exibirVeiculos();
