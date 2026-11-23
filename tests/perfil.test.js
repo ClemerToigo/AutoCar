@@ -23,7 +23,7 @@ async function call(route, { method = 'GET', body, token = sign(admin) } = {}) {
 }
 const login = (email, senha) => call('/auth/login', { method: 'POST', token: null, body: { email, senha } });
 before(async () => {
-  await database.createSchema(schema); await Usuario.sync(); hash = await bcrypt.hash(password, 12);
+  await database.createSchema(schema); await database.sync(); hash = await bcrypt.hash(password, 12);
   server = app.listen(0, '127.0.0.1'); await once(server, 'listening'); base = `http://127.0.0.1:${server.address().port}`;
 });
 beforeEach(async () => {

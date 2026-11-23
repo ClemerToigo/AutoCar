@@ -34,11 +34,13 @@ app.use((req, res) => res.status(404).send('Página não encontrada.'));
 app.use((error, req, res, next) => {
   if (res.headersSent) return next(error);
   const isUpload = error.name === 'MulterError';
-  const status = error.status || (isUpload ? (error.code === 'LIMIT_FILE_SIZE' ? 413 : 400) : error.name === 'SequelizeUniqueConstraintError' ? 409 : error.name === 'SequelizeForeignKeyConstraintError' ? 409 : error.name === 'SequelizeValidationError' ? 400 : 500);
+  // PostgreSQL também usa 23001 para ON DELETE RESTRICT; o Sequelize pode expor esse caso como DatabaseError.
+  const isForeignKey = error.name === 'SequelizeForeignKeyConstraintError' || ['23503', '23001'].includes(error.original?.code);
+  const status = error.status || (isUpload ? (error.code === 'LIMIT_FILE_SIZE' ? 413 : 400) : error.name === 'SequelizeUniqueConstraintError' ? 409 : isForeignKey ? 409 : error.name === 'SequelizeValidationError' ? 400 : 500);
   if (status >= 500) console.error(`Erro no servidor: ${error.name}`);
   const message = isUpload ? (error.code === 'LIMIT_FILE_SIZE' ? 'Cada foto pode ter no máximo 5 MB.' : 'Envie uma foto principal e até 6 fotos na galeria.')
     : error.name === 'SequelizeUniqueConstraintError' ? 'Já existe um usuário com esse e-mail ou CPF.'
-    : error.name === 'SequelizeForeignKeyConstraintError' ? 'Não foi possível concluir: há registros vinculados ou uma opção não existe.'
+    : isForeignKey ? 'Não foi possível concluir: há registros vinculados ou uma opção não existe.'
     : error.name === 'SequelizeValidationError' ? 'Confira os dados informados.'
     : error.type === 'entity.parse.failed' ? 'Envie um JSON válido.'
     : error.type === 'entity.too.large' ? 'Requisição muito grande.'

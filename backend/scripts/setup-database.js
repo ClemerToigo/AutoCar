@@ -15,19 +15,27 @@ async function setupDatabase() {
   }
   await database.authenticate();
   const schema = await fs.readFile(path.resolve(__dirname, '../../database/schema.sql'), 'utf8');
-  await database.transaction(async (transaction) => {
-    await database.query(schema, { transaction });
-    const [, created] = await Usuario.findOrCreate({
-      where: { login },
-      defaults: {
-        nome: process.env.ADMIN_SEED_NOME || 'Administrador',
-        senha: await bcrypt.hash(senha, 12),
-        tipo: 'ADMIN',
-      },
-      transaction,
+  try {
+    await database.transaction(async (transaction) => {
+      await database.query(schema, { transaction });
+      const [, created] = await Usuario.findOrCreate({
+        where: { login },
+        defaults: {
+          nome: process.env.ADMIN_SEED_NOME || 'Administrador',
+          senha: await bcrypt.hash(senha, 12),
+          tipo: 'ADMIN',
+        },
+        transaction,
+      });
+      console.log(created ? 'Banco do AutoCar pronto. Administrador criado.' : 'Banco do AutoCar pronto. Usuário existente preservado, incluindo a senha.');
     });
-    console.log(created ? 'Banco do AutoCar pronto. Administrador criado.' : 'Banco do AutoCar pronto. Usuário existente preservado, incluindo a senha.');
-  });
+  } catch (error) {
+    const constraint = error.original?.constraint;
+    if (error.name === 'SequelizeUniqueConstraintError' && ['marcas_nome_sem_caixa_unique', 'categorias_nome_sem_caixa_unique', 'servicos_nome_sem_caixa_unique'].includes(constraint)) {
+      throw new Error(`Há nomes duplicados em ${constraint.split('_')[0]}. Diferenças apenas de maiúsculas/minúsculas também contam como repetição, inclusive em letras acentuadas. Renomeie os cadastros repetidos e execute db:setup novamente. Nenhum registro foi apagado.`, { cause: error });
+    }
+    throw error;
+  }
 }
 
 if (require.main === module) {

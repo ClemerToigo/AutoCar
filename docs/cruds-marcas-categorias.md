@@ -4,7 +4,7 @@ Todas as rotas exigem `Authorization: Bearer <token>` e um usuário ativo com pe
 
 ## Preparação
 
-Não há migração: as tabelas `marcas` e `categorias` já existem (criadas por `npm run db:setup` junto com as opções iniciais) e **não foram alteradas**. Basta reiniciar o servidor (`npm start`).
+Execute `npm run db:setup` depois de atualizar. As tabelas existentes são preservadas e recebem índices únicos com comparação Unicode via ICU. Isso impede duplicados inclusive em solicitações simultâneas e em bancos com localidade C. A preparação informa se houver nomes repetidos antigos, sem apagá-los nem mesclá-los automaticamente. Depois, reinicie o servidor (`npm start`).
 
 ## Rotas
 
@@ -27,6 +27,7 @@ Filtro: `q` (nome). Padrão de 8 itens por página. A resposta da listagem é `{
 ## Regras
 
 - O nome é obrigatório, tem até 100 caracteres e é único **sem diferenciar maiúsculas de minúsculas** (409 se já existir).
+- A regra também vale para letras acentuadas: `Citroën` e `CITROËN` são o mesmo nome. Acentos continuam significativos: `Revisão` e `Revisao` podem ser nomes diferentes.
 - Uma marca ou categoria que já tem veículos **não pode ser excluída** (409), pois o banco usa `ON DELETE RESTRICT`. Altere ou exclua os veículos antes.
 - Na edição é possível trocar apenas as letras do próprio nome (ex.: `toyota` → `Toyota`).
 - A tabela só tem `id` e `nome`; por isso não há `versao`, status ativo/inativo nem datas de cadastro, diferentemente de Serviços.

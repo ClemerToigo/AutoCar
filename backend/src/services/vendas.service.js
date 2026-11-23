@@ -13,7 +13,7 @@ const STATUS = ['EM_NEGOCIACAO', 'APROVADA', 'CONCLUIDA', 'CANCELADA'];
 const PAYMENTS = ['A_VISTA', 'FINANCIAMENTO', 'CARTAO'];
 const PERIODS = ['30', 'mes', 'ano'];
 // Status do veículo que acompanha cada status da venda.
-const VEHICLE_STATUS = { EM_NEGOCIACAO: 'RESERVADO', APROVADA: 'RESERVADO', CONCLUIDA: 'VENDIDO', CANCELADA: 'DISPONIVEL' };
+const VEHICLE_STATUS = require('./vendas-status');
 const MAX_SERVICES = 20;
 const timeZone = 'America/Sao_Paulo';
 const periodStart = {

@@ -31,7 +31,7 @@ async function call(route, { method = 'GET', body, authorization = token } = {})
 }
 
 before(async () => {
-  await database.createSchema(schema); await Usuario.sync(); await Marca.sync(); await Categoria.sync(); await Veiculo.sync();
+  await database.createSchema(schema); await database.sync();
   hash = await bcrypt.hash('senha-painel-123', 12);
   admin = await Usuario.create({ nome: 'Admin Painel', login: 'admin@painel.local', senha: hash, tipo: 'ADMIN' });
   token = jwt.sign({ id_usuario: admin.id, versao_sessao: admin.versao_sessao }, config.secret, { issuer: config.issuer, audience: config.audience, expiresIn: '1h' });

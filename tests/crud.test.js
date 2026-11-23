@@ -34,7 +34,7 @@ async function call(route, { method = 'GET', body, token = adminToken } = {}) {
 }
 function multipart(data, main, gallery = []) { const form = new FormData(); for (const [key, value] of Object.entries(data)) form.set(key, String(value)); if (main) form.set('foto', new Blob([main], { type: 'image/png' }), 'principal.png'); for (const bytes of gallery) form.append('galeria', new Blob([bytes], { type: 'image/png' }), 'galeria.png'); return form; }
 before(async () => {
-  await database.createSchema(schema); await Usuario.sync(); await Marca.sync(); await Categoria.sync(); await Veiculo.sync();
+  await database.createSchema(schema); await database.sync();
   const hash = await bcrypt.hash('senha-admin-123', 12);
   admin = await Usuario.create({ nome: 'Admin Teste', login: 'admin@autocar.local', senha: hash, tipo: 'ADMIN' });
   otherAdmin = await Usuario.create({ nome: 'Outro Admin', login: 'outroadmin@autocar.local', senha: hash, tipo: 'ADMIN' });

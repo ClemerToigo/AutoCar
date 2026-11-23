@@ -4,7 +4,7 @@ Todas as rotas exigem `Authorization: Bearer <token>` e um usuário ativo com pe
 
 ## Preparação
 
-Depois de atualizar o código, rode `npm run db:setup` na raiz. O comando cria as tabelas `servicos`, `vendas` e `venda_servicos` sem apagar dados existentes. Sem elas, `npm start` avisa para executar o comando.
+Depois de atualizar o código, rode `npm run db:setup` na raiz. O comando cria as tabelas `servicos`, `vendas` e `venda_servicos` e os índices de nomes únicos com comparação Unicode via ICU, sem apagar dados existentes. Sem as tabelas, `npm start` avisa para executar o comando. Se houver nomes repetidos antigos, a preparação é desfeita e informa a tabela; renomeie os cadastros repetidos e tente novamente.
 
 ## Serviços
 
@@ -23,6 +23,7 @@ Filtros: `q` (nome/descrição) e `status=ATIVO|INATIVO`. Padrão de 8 itens por
 ```
 
 - O nome é único, sem diferenciar maiúsculas de minúsculas. O preço aceita zero e até duas casas decimais.
+- A unicidade é garantida pelo PostgreSQL também para letras acentuadas e requisições simultâneas, independentemente da localidade do banco.
 - Serviços inativos não aparecem ao registrar novas vendas.
 - Um serviço já usado em uma venda **não pode ser excluído** (409); marque-o como inativo.
 - Alterar o preço de um serviço não muda vendas já registradas: cada venda guarda o preço cobrado na época.
@@ -56,9 +57,10 @@ Formas de pagamento: `A_VISTA`, `FINANCIAMENTO`, `CARTAO`. Status: `EM_NEGOCIACA
 - O cliente precisa ser um usuário ativo do tipo cliente. O número da venda (`numero`) é gerado a partir do ano e do id.
 - Um veículo só pode ter **uma venda não cancelada**. Veículos já vendidos não podem ser vendidos de novo (409).
 - O status do veículo acompanha o da venda: em negociação e aprovada deixam o veículo **Reservado**, concluída o deixa **Vendido** e cancelada o devolve para **Disponível**. Isso alimenta a contagem de vendidos do dashboard.
+- O CRUD de Veículos não permite alterar o status para contrariar uma venda não cancelada (409); a alteração deve ser feita pela venda. Os outros campos do veículo continuam editáveis.
 - Na edição não é possível trocar o veículo; cancele a venda e registre outra. Vendas canceladas não podem ser alteradas.
 - Excluir é cancelar: o registro e os valores ficam no histórico. A tela mostra a ação como "Cancelar", conforme o wireframe.
-- Clientes e veículos com vendas não podem ser excluídos (409).
+- Clientes e veículos com vendas, inclusive canceladas, não podem ser excluídos (409 com mensagem explicativa); os cadastros e as fotos ficam preservados.
 
 ## Respostas de erro
 
@@ -66,4 +68,4 @@ Seguem o padrão `{ "message": "explicação" }`: 400 para dados inválidos, 401
 
 ## Testes
 
-`npm test` inclui `tests/money.test.js`, que valida os cálculos em centavos e não precisa de banco.
+`npm test` inclui `tests/money.test.js`, que valida os cálculos em centavos sem banco, e `tests/vendas-servicos.test.js`, que exige `TEST_DATABASE_URL`. Os testes de integração usam a preparação SQL real para cobrir atualização de uma instalação anterior, preservação dos registros, acentos e nomes simultâneos, cálculos, preços históricos, permissões, cancelamento, status dos veículos, vínculos e mensagens de erro.

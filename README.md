@@ -1,12 +1,12 @@
 # AutoCar
 
-Login e CRUDs de Usuários e Veículos implementados em JavaScript e Node.js, usando `desenvweb2026/` como referência de Express, Sequelize/PostgreSQL, bcrypt e JWT. A referência foi preservada. Os arquivos do projeto estão em `backend/`, `frontend/` e `database/` na raiz do AutoCar.
+Login e CRUDs de Usuários, Veículos, Marcas, Categorias, Serviços e Vendas implementados em JavaScript e Node.js, seguindo a arquitetura de Express, Sequelize/PostgreSQL, bcrypt e JWT da referência `desenvweb2026/`. Os arquivos do projeto estão em `backend/`, `frontend/` e `database/` na raiz do AutoCar.
 
 O frontend mantém os arquivos HTML/CSS/JavaScript já previstos no AutoCar e é servido pelo próprio Node.js. Não precisa iniciar um segundo servidor para a interface.
 
 ## Executar
 
-Pré-requisitos: Node.js 22 ou superior, npm e PostgreSQL.
+Pré-requisitos: Node.js 22 ou superior, npm e PostgreSQL com suporte a ICU. A comparação Unicode do banco impede nomes repetidos em Marcas, Categorias e Serviços mesmo com maiúsculas/minúsculas diferentes e letras acentuadas, inclusive quando o banco foi criado com a localidade C.
 
 Na pasta `AutoCar`:
 
@@ -29,7 +29,7 @@ npm run db:setup
 npm start
 ```
 
-Abra **http://localhost:8080**. O comando de preparação cria/atualiza as tabelas de usuários e veículos, as opções iniciais de marcas/categorias e o administrador configurado no `.env`. Execute-o também ao atualizar uma instalação anterior. Não apaga dados e não troca a senha de um usuário já existente.
+Abra **http://localhost:8080**. O comando de preparação cria/atualiza as tabelas, os índices de nomes únicos, as opções iniciais de marcas/categorias e o administrador configurado no `.env`. Execute-o também ao atualizar uma instalação anterior. Não apaga dados e não troca a senha de um usuário já existente. Se já houver nomes repetidos mudando apenas maiúsculas/minúsculas, a preparação é desfeita e informa a tabela afetada; renomeie os cadastros repetidos antes de executar novamente. Os registros não são apagados nem mesclados automaticamente.
 
 Credenciais locais iniciais, com os valores do `.env.example`:
 
@@ -55,7 +55,7 @@ Nesta configuração, use uma porta livre (por exemplo, `DB_PORT=5433`), `DB_USE
 - `GET /api/auth/me`: recebe `Authorization: Bearer <token>`, valida assinatura/expiração e consulta o usuário no banco.
 - A tela de login mostra erros de validação, credenciais incorretas e falhas de conexão. O botão de envio evita solicitações duplicadas.
 - Após o login, clientes acessam `/pages/conta.html`, com nome, e-mail e saída da sessão. Administradores continuam no dashboard. A área de cliente consulta `/api/auth/me` e não concede acesso às APIs administrativas.
-- A página `frontend/pages/admin/dashboard.html` reproduz o dashboard administrativo do wireframe. O painel só é exibido após a API validar a sessão e confirmar o perfil ADMIN. O nome e o perfil vêm da conta autenticada. Todos os indicadores, listas e gráficos consultam os registros reais do banco. O painel mostra total de veículos, disponíveis, reservados, vendidos por status, clientes cadastrados e valor do estoque disponível/reservado. As listas exibem os últimos clientes e veículos cadastrados. O gráfico conta cadastros reais de veículos e clientes nos últimos 12 meses, no horário de Brasília; meses sem cadastros ficam com zero. Não há vendas ou serviços fictícios. Usuários e Veículos abrem os CRUDs completos; os outros módulos continuam separados.
+- A página `frontend/pages/admin/dashboard.html` reproduz o dashboard administrativo do wireframe. O painel só é exibido após a API validar a sessão e confirmar o perfil ADMIN. O nome e o perfil vêm da conta autenticada. Todos os indicadores, listas e gráficos consultam os registros reais do banco. O painel mostra total de veículos, disponíveis, reservados, vendidos por status, clientes cadastrados e valor do estoque disponível/reservado. As listas exibem os últimos clientes e veículos cadastrados. O gráfico conta cadastros reais de veículos e clientes nos últimos 12 meses, no horário de Brasília; meses sem cadastros ficam com zero. Não há vendas ou serviços fictícios. O menu abre os seis CRUDs completos.
 - Por padrão, o token fica em `sessionStorage`. A opção **Lembrar-me** utiliza `localStorage`. Ambos mantêm a sessão ao recarregar a página; o JWT vence em duas horas por padrão. **Sair** apaga o token do navegador. Alterar senha, e-mail, perfil ou status invalida os tokens anteriores dessa conta. Sair encerra a sessão do navegador; uma cópia do token só perde a validade por expiração, exclusão, desativação ou mudança de dados de acesso.
 - A página revalida a sessão ao abrir, ao usar o botão Voltar e quando outra aba modifica o token persistente. Um erro de rede permite tentar novamente sem exibir dados da conta.
 - Senhas ficam somente como hash bcrypt. As respostas de login não diferenciam usuário inexistente de senha incorreta. Tentativas malsucedidas são limitadas por IP.
@@ -84,7 +84,7 @@ Os testes usam um PostgreSQL real e criam um schema temporário exclusivo, remov
 TEST_DATABASE_URL=postgres://usuario:senha@localhost:5432/autocar_test npm test
 ```
 
-Cobrem dashboard vazio, totais por status, soma decimal do estoque, agrupamento mensal e limites de data em Brasília, atualização após alterações/exclusões, cadastro público, confirmação de senha, aceite, tentativas de elevação de privilégio, cadastros simultâneos, login, JWT, operações completas dos CRUDs, permissões, CPF/e-mail duplicados, contas inativas, invalidação de sessões, edição concorrente, proteção dos administradores, filtros/paginação, valores decimais, fotos inválidas/grandes e limpeza das imagens excluídas. Não dependem de mock da autenticação ou do banco.
+Cobrem dashboard vazio, totais por status, soma decimal do estoque, agrupamento mensal e limites de data em Brasília, atualização após alterações/exclusões, cadastro público, confirmação de senha, aceite, tentativas de elevação de privilégio, cadastros simultâneos, login, JWT, operações completas dos CRUDs, permissões, CPF/e-mail duplicados, contas inativas, invalidação de sessões, edição concorrente, proteção dos administradores, filtros/paginação, valores decimais, fotos inválidas/grandes e limpeza das imagens excluídas. Os testes de Serviços e Vendas também executam a preparação SQL real sobre uma estrutura antiga, verificam preservação dos dados, preços históricos, cancelamento, proteção do status dos veículos, vínculos e nomes duplicados em operações simultâneas. Não dependem de mock da autenticação ou do banco.
 
 ## Referência preservada
 
@@ -94,7 +94,7 @@ O antigo `backend/package.json` continha comandos MongoDB sem relação com a co
 
 As telas de login, cadastro, dashboard e CRUDs seguem os modelos do `docs/wireframes/WireFrame_AutoCar.pdf`. Foram reproduzidos a identidade vermelha e azul-escura, a foto do carro, os textos, a disposição do formulário, o menu lateral, os cartões, a tabela e o gráfico. A foto e as miniaturas foram extraídas do PDF; as fontes Inter e Barlow Condensed são servidas localmente e suas licenças estão em `frontend/assets/fonts/`.
 
-A autenticação continua real: a nota de demonstração do wireframe não permite entrar sem credenciais. O cadastro público salva a conta no PostgreSQL. Recuperação de senha e as outras opções fora do escopo mostram informações em uma caixa de diálogo; não simulam envio de e-mail. O escopo inclui cadastro, login, dashboard e os CRUDs de Usuários e Veículos atribuídos ao Clemer. As opções de Marcas e Categorias fornecem dados para o formulário de veículo, mas não possuem CRUD próprio nesta etapa.
+A autenticação continua real: a nota de demonstração do wireframe não permite entrar sem credenciais. O cadastro público salva a conta no PostgreSQL. Recuperação de senha e as outras opções fora do escopo mostram informações em uma caixa de diálogo; não simulam envio de e-mail. O escopo inclui cadastro, login, dashboard, os CRUDs de Usuários e Veículos atribuídos ao Clemer e os módulos integrados de Marcas, Categorias, Serviços e Vendas. Marcas e Categorias alimentam as opções do formulário de veículo.
 
 ## CRUDs do Clemer
 
@@ -103,6 +103,7 @@ No menu administrativo, acesse **Usuários** ou **Veículos**. As duas telas tê
 - Usuários: nome, CPF válido/único, telefone com DDD, e-mail único, senha bcrypt, tipo Cliente/Administrador e status Ativo/Inativo. Na edição, senha em branco preserva a senha atual. A conta inicial pode ter CPF/telefone vazios porque foi criada antes do CRUD; complete esses campos para editar seu cadastro.
 - Apenas administradores acessam as APIs dos CRUDs. Uma conta inativa não autentica. Não é possível excluir/desativar a própria conta administrativa ou remover seu próprio perfil ADMIN. Alterações simultâneas são serializadas para não eliminar todos os administradores.
 - Veículos: marca, modelo, categoria, ano, quilometragem, preço com duas casas, combustível, câmbio, cor, status e descrição. Os relacionamentos com marca/categoria são validados no banco.
+- O status de um veículo com venda não cancelada é controlado pela venda: negociação/aprovada reservam o carro e concluída marca como vendido. Outros dados do veículo continuam editáveis. Usuários e veículos vinculados a vendas, inclusive canceladas, não podem ser excluídos; a API explica o vínculo e preserva o histórico e as fotos.
 - Fotos: principal opcional e até seis imagens de galeria, JPG/PNG/WEBP com até 5 MB por arquivo. O servidor valida o conteúdo real, reencoda em WEBP e salva em `.local/uploads`. Ao remover/substituir fotos ou excluir o veículo, os arquivos correspondentes são removidos. As fotos de veículos são públicas em `/media/<uuid>.webp`; criar ou alterar requer ADMIN.
 - Os formulários enviam a versão do registro. Se outra pessoa o alterar antes do salvamento, a API retorna conflito em vez de sobrescrever silenciosamente.
 

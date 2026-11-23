@@ -3,6 +3,8 @@ const database = require('../config/database');
 const Veiculo = require('../models/veiculo.model');
 const Marca = require('../models/marca.model');
 const Categoria = require('../models/categoria.model');
+const Venda = require('../models/venda.model');
+const vehicleStatusForSale = require('./vendas-status');
 const photos = require('./vehicle-photos');
 const v = require('./validation');
 const include = [{ model: Marca, as: 'marca', attributes: ['id', 'nome'] }, { model: Categoria, as: 'categoria', attributes: ['id', 'nome'] }];
@@ -56,6 +58,10 @@ async function update(rawId, body, files) {
       if (!row) v.fail('Veículo não encontrado.', 404);
       if (body.versao !== undefined && v.integer(body.versao, 'Versão', 0) !== row.versao) v.fail('Este veículo foi alterado por outra pessoa. Recarregue os dados antes de salvar.', 409);
       const data = await validate(body, transaction);
+      const sale = await Venda.findOne({ where: { veiculo_id: id, status: { [Op.ne]: 'CANCELADA' } }, attributes: ['status'], transaction });
+      if (sale && data.status !== vehicleStatusForSale[sale.status]) {
+        v.fail('O status deste veículo é controlado pela venda vinculada. Altere ou cancele a venda para mudar o status do veículo.', 409);
+      }
       images = await photos.prepare(body, files, row);
       const retained = [images.foto, ...images.galeria];
       removed = [row.foto, ...row.galeria].filter((photo) => photo && !retained.includes(photo));
@@ -70,6 +76,9 @@ async function remove(rawId) {
   const images = await database.transaction(async (transaction) => {
     const row = await Veiculo.findByPk(id, { transaction, lock: transaction.LOCK.UPDATE });
     if (!row) v.fail('Veículo não encontrado.', 404);
+    if (await Venda.count({ where: { veiculo_id: id }, transaction })) {
+      v.fail('Este veículo possui vendas vinculadas e não pode ser excluído. O cadastro deve ser preservado para manter o histórico das vendas.', 409);
+    }
     const paths = [row.foto, ...row.galeria].filter(Boolean);
     await row.destroy({ transaction });
     return paths;
