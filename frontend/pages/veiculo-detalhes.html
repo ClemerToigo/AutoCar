@@ -1,0 +1,251 @@
+
+const veiculos = [
+    {
+        id: 1,
+        marca: "Honda",
+        modelo: "Civic",
+        ano: 2022,
+        preco: 125000,
+        categoria: "Sedan",
+        quilometragem: "25.000 km",
+        combustivel: "Flex",
+        cambio: "Automático",
+        cor: "Preto",
+        imagem: "/assets/images/veiculos/civic-wireframe.webp",
+        descricao: "Veículo confortável, moderno e com excelente desempenho."
+    },
+    {
+        id: 2,
+        marca: "Toyota",
+        modelo: "Corolla",
+        ano: 2023,
+        preco: 145000,
+        categoria: "Sedan",
+        quilometragem: "18.000 km",
+        combustivel: "Flex",
+        cambio: "Automático",
+        cor: "Prata",
+        imagem: "/assets/images/veiculos/corolla-wireframe.webp",
+        descricao: "Veículo reconhecido pelo conforto, economia e confiabilidade."
+    },
+    {
+        id: 3,
+        marca: "Volkswagen",
+        modelo: "Polo",
+        ano: 2022,
+        preco: 85000,
+        categoria: "Hatch",
+        quilometragem: "30.000 km",
+        combustivel: "Flex",
+        cambio: "Manual",
+        cor: "Branco",
+        imagem: "/assets/images/veiculos/polo-wireframe.webp",
+        descricao: "Compacto, econômico e ideal para o dia a dia."
+    },
+    {
+        id: 4,
+        marca: "Ford",
+        modelo: "Ranger",
+        ano: 2023,
+        preco: 210000,
+        categoria: "Picape",
+        quilometragem: "15.000 km",
+        combustivel: "Diesel",
+        cambio: "Automático",
+        cor: "Cinza",
+        imagem: "/assets/images/veiculos/ranger-wireframe.webp",
+        descricao: "Picape robusta, confortável e preparada para diferentes terrenos."
+    }
+];
+
+const formatarPreco = valor =>
+    valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+
+const id = new URLSearchParams(window.location.search).get("id");
+
+const veiculo = veiculos.find(item => item.id === Number(id));
+
+document.body.innerHTML = `
+    <header class="cabecalho">
+        <a href="/pages/catalogo.html" class="logo">AutoCar</a>
+
+        <nav>
+            <a href="/pages/catalogo.html">Veículos</a>
+            <a href="/pages/servicos.html">Serviços</a>
+            <a href="/pages/login.html">Minha conta</a>
+        </nav>
+    </header>
+
+    <main class="detalhes">
+        <a href="/pages/catalogo.html" class="voltar">
+            ← Voltar ao catálogo
+        </a>
+
+        <div id="conteudo"></div>
+    </main>
+`;
+
+const estilo = document.createElement("style");
+
+estilo.textContent = `
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f6f8;
+        color: #101828;
+    }
+
+    .cabecalho {
+        background: #0f1728;
+        color: white;
+        padding: 22px 7%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    nav {
+        display: flex;
+        gap: 25px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .detalhes {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .voltar {
+        display: inline-block;
+        margin-bottom: 25px;
+        color: #ed0010;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .veiculo-detalhado {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 3px 12px #0001;
+    }
+
+    .veiculo-detalhado img {
+        width: 100%;
+        height: 350px;
+        object-fit: contain;
+        background: #eee;
+        border-radius: 8px;
+    }
+
+    .informacoes h1 {
+        font-size: 32px;
+        margin-top: 0;
+    }
+
+    .preco {
+        color: #ed0010;
+        font-size: 27px;
+        font-weight: bold;
+    }
+
+    .especificacoes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin: 25px 0;
+    }
+
+    .especificacoes div {
+        padding: 12px;
+        background: #f5f6f8;
+        border-radius: 6px;
+    }
+
+    .botao {
+        display: inline-block;
+        padding: 13px 20px;
+        background: #ed0010;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+
+    @media(max-width: 700px) {
+        .veiculo-detalhado {
+            grid-template-columns: 1fr;
+        }
+
+        .cabecalho {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        nav {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+`;
+
+document.head.appendChild(estilo);
+
+const conteudo = document.getElementById("conteudo");
+
+if (veiculo) {
+    conteudo.innerHTML = `
+        <section class="veiculo-detalhado">
+            <div>
+                <img src="${veiculo.imagem}"
+                     alt="${veiculo.marca} ${veiculo.modelo}">
+            </div>
+
+            <div class="informacoes">
+                <h1>${veiculo.marca} ${veiculo.modelo}</h1>
+
+                <p class="preco">${formatarPreco(veiculo.preco)}</p>
+
+                <p>${veiculo.descricao}</p>
+
+                <div class="especificacoes">
+                    <div><strong>Ano:</strong> ${veiculo.ano}</div>
+                    <div><strong>Categoria:</strong> ${veiculo.categoria}</div>
+                    <div><strong>Quilometragem:</strong> ${veiculo.quilometragem}</div>
+                    <div><strong>Combustível:</strong> ${veiculo.combustivel}</div>
+                    <div><strong>Câmbio:</strong> ${veiculo.cambio}</div>
+                    <div><strong>Cor:</strong> ${veiculo.cor}</div>
+                </div>
+
+                <a href="/pages/login.html" class="botao">
+                    Tenho interesse
+                </a>
+            </div>
+        </section>
+    `;
+} else {
+    conteudo.innerHTML = `
+        <h2>Veículo não encontrado.</h2>
+        <p>Volte ao catálogo e escolha outro veículo.</p>
+        <a href="/pages/catalogo.html" class="botao">
+            Voltar ao catálogo
+        </a>
+    `;
+}
