@@ -1,0 +1,183 @@
+
+const servicos = [
+    {
+        nome: "Revisão preventiva",
+        descricao: "Verificação dos principais componentes do veículo para garantir segurança e bom funcionamento.",
+        preco: "Sob consulta",
+        icone: "🔧"
+    },
+    {
+        nome: "Troca de óleo",
+        descricao: "Manutenção do óleo do motor para preservar o desempenho e aumentar sua vida útil.",
+        preco: "Sob consulta",
+        icone: "🛢️"
+    },
+    {
+        nome: "Higienização",
+        descricao: "Limpeza interna do veículo, proporcionando mais conforto e conservação.",
+        preco: "Sob consulta",
+        icone: "✨"
+    },
+    {
+        nome: "Avaliação veicular",
+        descricao: "Análise das condições gerais do veículo para auxiliar na compra ou venda.",
+        preco: "Sob consulta",
+        icone: "🚗"
+    }
+];
+
+document.body.innerHTML = `
+    <header class="cabecalho">
+        <a href="/pages/catalogo.html" class="logo">AutoCar</a>
+
+        <nav>
+            <a href="/pages/catalogo.html">Veículos</a>
+            <a href="/pages/servicos.html">Serviços</a>
+            <a href="/pages/login.html">Minha conta</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="banner">
+            <h1>Nossos serviços</h1>
+            <p>Cuidamos do seu veículo em cada etapa.</p>
+        </section>
+
+        <section class="servicos">
+            <h2>Conheça nossos serviços</h2>
+
+            <div id="lista-servicos" class="lista-servicos"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>AutoCar - Qualidade e confiança para você.</p>
+    </footer>
+`;
+
+const estilo = document.createElement("style");
+
+estilo.textContent = `
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f6f8;
+        color: #101828;
+    }
+
+    .cabecalho {
+        background: #0f1728;
+        color: white;
+        padding: 22px 7%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    nav {
+        display: flex;
+        gap: 25px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .banner {
+        background: #15243d;
+        color: white;
+        padding: 65px 8%;
+        text-align: center;
+    }
+
+    .banner h1 {
+        font-size: 38px;
+    }
+
+    .servicos {
+        padding: 50px 8%;
+    }
+
+    .lista-servicos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .card-servico {
+        background: white;
+        padding: 28px;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px #0001;
+        transition: transform .2s;
+    }
+
+    .card-servico:hover {
+        transform: translateY(-5px);
+    }
+
+    .icone {
+        font-size: 35px;
+    }
+
+    .card-servico h3 {
+        color: #0f1728;
+    }
+
+    .card-servico p {
+        color: #667085;
+        line-height: 1.6;
+    }
+
+    .preco {
+        color: #ed0010;
+        font-weight: bold;
+    }
+
+    footer {
+        padding: 25px;
+        text-align: center;
+        background: #0f1728;
+        color: white;
+    }
+
+    @media(max-width: 600px) {
+        .cabecalho {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        nav {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+`;
+
+document.head.appendChild(estilo);
+
+const lista = document.getElementById("lista-servicos");
+
+servicos.forEach(servico => {
+    const card = document.createElement("article");
+
+    card.className = "card-servico";
+
+    card.innerHTML = `
+        <div class="icone">${servico.icone}</div>
+        <h3>${servico.nome}</h3>
+        <p>${servico.descricao}</p>
+        <p class="preco">Valor: ${servico.preco}</p>
+    `;
+
+    lista.appendChild(card);
+});
